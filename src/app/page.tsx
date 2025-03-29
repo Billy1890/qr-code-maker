@@ -2,11 +2,21 @@
 
 import { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
+import { Analytics } from "@vercel/analytics/react";
+import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const QRCodeComponent = dynamic(() => import("./components/QRCodeComponent"), {
+  ssr: false,
+});
+
+
 
 export default function Home() {
   const [url, setUrl] = useState("");
   const [qrColor, setQrColor] = useState("#000000"); // Default black
   const [logo, setLogo] = useState<string | null>(null);
+  
 
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,10 +92,11 @@ export default function Home() {
 
             {logo && (
               <div className="mt-2">
-                <img
-                  src={logo}
-                  alt="Logo"
-                  className="w-12 h-12 rounded-full shadow-md"
+                <Image
+                  src="/logo.png"
+                  width={200}
+                  height={200}
+                  alt="QR Code Logo"
                 />
               </div>
             )}
