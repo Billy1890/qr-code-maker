@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { useEffect } from "react";
+import GoogleAdSense from "./components/GoogleAdSense"; // ✅ Import AdSense from a client component
 
 // Load fonts
 const geistSans = Geist({
@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-// ✅ SEO-Optimized Metadata
+// ✅ SEO-Optimized Metadata (Server Component)
 export const metadata: Metadata = {
   title: "QR Code Generator | Create Custom QR Codes",
   description:
@@ -28,24 +28,16 @@ export const metadata: Metadata = {
     "QR Code with Logo",
     "QR Code Branding",
   ],
-  authors: [
-    {
-      name: "Mohamed Nabil",
-      url: "https://qr-code-maker-billy1890-mohamed-nabils-projects-478c1d1f.vercel.app/",
-    },
-  ],
+  authors: [{ name: "Mohamed Nabil", url: "https://yourdomain.com" }],
   robots: "index, follow",
   creator: "Mohamed Nabil",
   publisher: "Mohamed Nabil",
-  alternates: {
-    canonical:
-      "https://qr-code-maker-billy1890-mohamed-nabils-projects-478c1d1f.vercel.app/",
-  },
+  alternates: { canonical: "https://yourdomain.com" },
   openGraph: {
     title: "QR Code Generator",
     description:
       "Create and customize QR codes with logos, colors, and branding.",
-    url: "https://qr-code-maker-billy1890-mohamed-nabils-projects-478c1d1f.vercel.app/",
+    url: "https://yourdomain.com",
     siteName: "QR Code Generator",
     images: [
       {
@@ -68,22 +60,6 @@ export const metadata: Metadata = {
   },
 };
 
-// ✅ AdSense Component (Loads only on the client)
-const GoogleAdSense = () => {
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const ads = document.createElement("script");
-      ads.async = true;
-      ads.src =
-        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-      ads.setAttribute("data-ad-client", "ca-pub-3112333795454729");
-      document.body.appendChild(ads);
-    }
-  }, []);
-
-  return null;
-};
-
 export default function RootLayout({
   children,
 }: {
@@ -95,7 +71,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <GoogleAdSense />
+        <GoogleAdSense /> {/* ✅ Load AdSense as a separate client component */}
       </body>
     </html>
   );
