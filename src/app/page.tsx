@@ -6,9 +6,6 @@ import { Analytics } from "@vercel/analytics/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const QRCodeComponent = dynamic(() => import("./components/QRCodeComponent"), {
-  ssr: false,
-});
 
 
 
