@@ -2,18 +2,11 @@
 
 import { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
-import Image from "next/image";
-
-
-
-
 
 export default function Home() {
   const [url, setUrl] = useState("");
   const [qrColor, setQrColor] = useState("#000000"); // Default black
   const [logo, setLogo] = useState<string | null>(null);
-  
-
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -24,23 +17,22 @@ export default function Home() {
     }
   };
 
- const downloadQR = () => {
-   const canvas = document.querySelector("canvas");
+  const downloadQR = () => {
+    const canvas = document.querySelector("canvas");
 
-   if (!canvas) {
-     console.error("Canvas element not found!");
-     return;
-   }
+    if (!canvas) {
+      console.error("Canvas element not found!");
+      return;
+    }
 
-   const pngUrl = canvas.toDataURL("image/png");
-   const downloadLink = document.createElement("a");
-   downloadLink.href = pngUrl;
-   downloadLink.download = "qr-code.png";
-   document.body.appendChild(downloadLink);
-   downloadLink.click();
-   document.body.removeChild(downloadLink);
- };
-
+    const pngUrl = canvas.toDataURL("image/png");
+    const downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = "qr-code.png";
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-6">
@@ -84,18 +76,24 @@ export default function Home() {
 
         {url && (
           <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center shadow-md">
-            <QRCodeCanvas value={url} size={200} fgColor={qrColor} />
-
-            {logo && (
-              <div className="mt-2">
-                <Image
-                  src="/logo.png"
-                  width={200}
-                  height={200}
-                  alt="QR Code Logo"
-                />
-              </div>
-            )}
+            <QRCodeCanvas
+              value={url}
+              size={200}
+              fgColor={qrColor}
+              includeMargin={true}
+              imageSettings={
+                logo
+                  ? {
+                      src: logo,
+                      x: undefined,
+                      y: undefined,
+                      height: 40,
+                      width: 40,
+                      excavate: true, // Ensures logo is properly visible
+                    }
+                  : undefined
+              }
+            />
 
             <button
               onClick={downloadQR}
