@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
-import { Analytics } from "@vercel/analytics/react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
+
 
 
 
