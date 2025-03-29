@@ -73,20 +73,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" dir="ltr">
+    <html lang="en">
       <head>
-        {/* Google Tag Manager (Add your GTM ID later) */}
+        {/* ✅ Google AdSense */}
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3112333795454729"
+          crossOrigin="anonymous"
         ></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-XXXXXXXXXX');
+              (adsbygoogle = window.adsbygoogle || []).push({
+                google_ad_client: "ca-pub-3112333795454729",
+                enable_page_level_ads: true
+              });
             `,
           }}
         />
