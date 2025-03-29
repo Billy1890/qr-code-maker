@@ -70,6 +70,11 @@ export default function RootLayout({
       <head>
         {/* ✅ Google AdSense Verification */}
         <meta name="google-adsense-account" content="ca-pub-3112333795454729" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3112333795454729"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
