@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { useEffect } from "react";
 
 // Load fonts
 const geistSans = Geist({
@@ -67,6 +68,22 @@ export const metadata: Metadata = {
   },
 };
 
+// ✅ AdSense Component (Loads only on the client)
+const GoogleAdSense = () => {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const ads = document.createElement("script");
+      ads.async = true;
+      ads.src =
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+      ads.setAttribute("data-ad-client", "ca-pub-3112333795454729");
+      document.body.appendChild(ads);
+    }
+  }, []);
+
+  return null;
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -74,28 +91,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        {/* ✅ Google AdSense */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3112333795454729"
-          crossOrigin="anonymous"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "ca-pub-3112333795454729",
-                enable_page_level_ads: true
-              });
-            `,
-          }}
-        />
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <GoogleAdSense />
       </body>
     </html>
   );
