@@ -1,7 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { QRCodeCanvas } from "qrcode.react";
+import { useState, useCallback } from "react";
+import dynamic from "next/dynamic";
+import debounce from "lodash.debounce";
+
+// Dynamically import QRCodeCanvas
+const QRCodeCanvas = dynamic(() => import("qrcode.react").then((mod) => mod.QRCodeCanvas), { ssr: false });
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -10,10 +14,12 @@ export default function Home() {
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
+    if (file && file.size < 500000) { // Limit to 500KB
       const reader = new FileReader();
       reader.onload = () => setLogo(reader.result as string);
       reader.readAsDataURL(file);
+    } else {
+      alert("File size should be less than 500KB");
     }
   };
 
@@ -34,8 +40,14 @@ export default function Home() {
     document.body.removeChild(downloadLink);
   };
 
+  const handleUrlChange = useCallback(
+    debounce((value: string) => setUrl(value), 300),
+    []
+  );
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-6">
+      <link rel="preload" href="/path-to-font.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
           QR Code Generator
@@ -44,8 +56,7 @@ export default function Home() {
         <input
           type="text"
           placeholder="Enter URL"
-          value={url}
-          onChange={(e) => setUrl(e.target.value)}
+          onChange={(e) => handleUrlChange(e.target.value)}
           className="border border-gray-300 p-3 rounded-md w-full mb-4 focus:ring-2 focus:ring-blue-500"
         />
 
@@ -73,6 +84,8 @@ export default function Home() {
             Choose File
           </div>
         </div>
+
+        
 
         {url && (
           <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center shadow-md">
