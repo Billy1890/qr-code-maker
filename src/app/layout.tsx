@@ -27,17 +27,26 @@ export const metadata: Metadata = {
     "Custom QR Codes",
     "QR Code with Logo",
     "QR Code Branding",
+    "qr gen",
+    "creator qr code",
+    "qrcode generator",
+    "qr code builder",
+    "qr barcode generator",
+    "generate barcode",
+    "scan code generator",
   ],
-  authors: [{ name: "Mohamed Nabil", url: "https://yourdomain.com" }],
+  authors: [
+    { name: "Mohamed Nabil", url: "https://qr-code-maker-amber.vercel.app/" },
+  ],
   robots: "index, follow",
   creator: "Mohamed Nabil",
   publisher: "Mohamed Nabil",
-  alternates: { canonical: "https://yourdomain.com" },
+  alternates: { canonical: "https://qr-code-maker-amber.vercel.app/" },
   openGraph: {
     title: "QR Code Generator",
     description:
       "Create and customize QR codes with logos, colors, and branding.",
-    url: "https://yourdomain.com",
+    url: "https://qr-code-maker-amber.vercel.app/",
     siteName: "QR Code Generator",
     images: [
       {
