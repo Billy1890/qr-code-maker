@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import GoogleAdSense from "./components/GoogleAdSense"; // ✅ Import AdSense from a client component
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Load fonts
 const geistSans = Geist({
@@ -90,6 +92,8 @@ export default function RootLayout({
       >
         {children}
         <GoogleAdSense /> {/* ✅ Load AdSense as a separate client component */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
