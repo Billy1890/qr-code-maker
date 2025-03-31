@@ -1,11 +1,13 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import dynamic from "next/dynamic";
-import debounce from "lodash.debounce";
+import Image from "next/image";
 
-// Dynamically import QRCodeCanvas
-const QRCodeCanvas = dynamic(() => import("qrcode.react").then((mod) => mod.QRCodeCanvas), { ssr: false });
+const QRCodeCanvas = dynamic(
+  () => import("qrcode.react").then((mod) => mod.QRCodeCanvas),
+  { ssr: false }
+);
 
 export default function Home() {
   const [url, setUrl] = useState("");
@@ -14,18 +16,15 @@ export default function Home() {
 
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file && file.size < 500000) { // Limit to 500KB
+    if (file) {
       const reader = new FileReader();
       reader.onload = () => setLogo(reader.result as string);
       reader.readAsDataURL(file);
-    } else {
-      alert("File size should be less than 500KB");
     }
   };
 
   const downloadQR = () => {
     const canvas = document.querySelector("canvas");
-
     if (!canvas) {
       console.error("Canvas element not found!");
       return;
@@ -40,23 +39,23 @@ export default function Home() {
     document.body.removeChild(downloadLink);
   };
 
-  const handleUrlChange = useCallback(
-    debounce((value: string) => setUrl(value), 300),
-    []
-  );
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-200 p-6">
-      <link rel="preload" href="/path-to-font.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
       <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
           QR Code Generator
         </h1>
 
+        <p className="text-gray-600 text-center mb-4">
+          Generate a custom QR Code for your website, business, or personal use.
+          Upload a logo, customize colors, and download your QR Code instantly.
+        </p>
+
         <input
           type="text"
           placeholder="Enter URL"
-          onChange={(e) => handleUrlChange(e.target.value)}
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
           className="border border-gray-300 p-3 rounded-md w-full mb-4 focus:ring-2 focus:ring-blue-500"
         />
 
@@ -85,8 +84,6 @@ export default function Home() {
           </div>
         </div>
 
-        
-
         {url && (
           <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center shadow-md">
             <QRCodeCanvas
@@ -98,15 +95,19 @@ export default function Home() {
                 logo
                   ? {
                       src: logo,
-                      x: undefined,
-                      y: undefined,
                       height: 40,
                       width: 40,
-                      excavate: true, // Ensures logo is properly visible
+                      excavate: true,
                     }
                   : undefined
               }
             />
+
+            {logo && (
+              <div className="mt-2">
+                <Image src={logo} width={40} height={40} alt="QR Code Logo" />
+              </div>
+            )}
 
             <button
               onClick={downloadQR}
@@ -116,6 +117,33 @@ export default function Home() {
             </button>
           </div>
         )}
+
+        <div className="mt-6 border-t pt-4">
+          <h2 className="text-lg font-bold text-gray-800 mb-2">
+            Why Use QR Codes?
+          </h2>
+          <p className="text-gray-600 text-sm mb-2">
+            QR codes help you quickly share links, business cards, WiFi
+            credentials, and more. They are widely used for marketing, payments,
+            and contactless interactions.
+          </p>
+        </div>
+
+        <div className="mt-4">
+          <h2 className="text-lg font-bold text-gray-800 mb-2">FAQs</h2>
+          <p className="text-gray-600 text-sm mb-1">
+            <strong>How do I scan a QR code?</strong> Use your smartphone camera
+            or a QR scanning app.
+          </p>
+          <p className="text-gray-600 text-sm mb-1">
+            <strong>What formats are supported?</strong> You can generate QR
+            codes for websites, contact details, and more.
+          </p>
+          <p className="text-gray-600 text-sm">
+            <strong>Is this tool free?</strong> Yes! You can generate and
+            download QR codes for free.
+          </p>
+        </div>
       </div>
     </div>
   );
