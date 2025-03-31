@@ -1,8 +1,9 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactRestrictmode: true,
+  experimental: {
+    optimizePackageImports: ['@heroicons/react'],
+  },
+}
 
-const nextConfig: NextConfig = {
-  reactStrictMode: true,
-  experimental: {},
-};
-
-export default nextConfig;
+module.exports = nextConfig

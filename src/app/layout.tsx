@@ -4,6 +4,15 @@ import "./globals.css";
 import GoogleAdSense from "./components/GoogleAdSense"; // ✅ Import AdSense from a client component
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Inter } from "next/font/google";
+import Layout from "./components/Layout";
+
+// Load Inter font
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
+
 
 // Load fonts
 const geistSans = Geist({
@@ -77,7 +86,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head>
         {/* ✅ Google AdSense Verification */}
         <meta name="google-adsense-account" content="ca-pub-3112333795454729" />
@@ -87,10 +96,8 @@ export default function RootLayout({
           crossOrigin="anonymous"
         ></script>
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={inter.className}>
+        <Layout>{children}</Layout>
         <GoogleAdSense /> {/* ✅ Load AdSense as a separate client component */}
         <Analytics />
         <SpeedInsights />
