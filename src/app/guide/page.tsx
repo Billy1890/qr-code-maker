@@ -7,8 +7,8 @@ export default function GuidePage() {
         <h2 className="text-2xl font-semibold mb-4">How to Use QR Codes</h2>
         <div className="space-y-4">
           <p>
-            QR codes are versatile tools for digital communication. Here's how
-            to get the most out of them:
+            QR codes are versatile tools for digital communication. Here&apos;s
+            how to get the most out of them:
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>For websites: Paste your URL in the generator</li>

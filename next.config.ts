@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactRestrictmode: true,
+  reactStrictMode: true,
   experimental: {
     optimizePackageImports: ['@heroicons/react'],
   },
